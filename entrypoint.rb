@@ -11,12 +11,15 @@ head = ENV["INPUT_HEAD"]
 base = ENV["INPUT_BASE"]
 title = ENV["INPUT_TITLE"]
 body = ENV["INPUT_BODY"]
-repo = ENV["INPUT_REPO"] || ENV["GITHUB_REPOSITORY"]
+repo = ENV["INPUT_REPO"]
 
 begin
   client = Octokit::Client.new(:access_token => access_token)
 
-  # Guess title if empty
+  if repo.empty?
+    repo = ENV["GITHUB_REPOSITORY"]
+  end
+
   if title.empty?
     prefix = "heads/"
     ref = head.split('/').last.prepend(prefix)
