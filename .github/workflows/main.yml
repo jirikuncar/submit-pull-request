@@ -1,0 +1,19 @@
+name: Test
+
+on: create
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    if: github.event.ref == 'test' && github.event.ref_type == 'branch'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Create Pull Request
+        id: create
+        uses: ./
+        with:
+          access_token: ${{ secrets.GITHUB_TOKEN }}
+          head: ${{ github.event.ref }}
+      - name: Check PR existence
+        run: curl "https://github.com/${GITHUB_REPOSITORY}/pull/${{ steps.create.outputs.number }}"
