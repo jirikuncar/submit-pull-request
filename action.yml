@@ -1,12 +1,28 @@
-name: 'Container Action Template'
-description: 'Get started with Container actions'
-author: 'GitHub'
-inputs: 
-  myInput:
-    description: 'Input to use'
-    default: 'world'
+name: 'Submit Pull Request'
+description: 'Submit a pull request from a directory to a given repository'
+author: 'jirikuncar'
+branding:
+  icon: git-pull-request
+  color: green
+inputs:
+  access_token:
+    description: 'A valid GitHub access token'
+    required: true
+  head:
+    description: 'Name of the source branch'
+    required: true
+  repo:
+          description: 'Name of the repository (default: current repository)'
+  base:
+    description: 'Name of the target branch (default: master)'
+    default: 'master'
+  title:
+    description: 'Pull request title (default: commit message)'
+  body:
+    description: 'Pull request body'
+outputs:
+  number:
+    description: 'The pull request number'
 runs:
   using: 'docker'
   image: 'Dockerfile'
-  args:
-    - ${{ inputs.myInput }}

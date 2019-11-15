@@ -1,7 +1,11 @@
-FROM alpine:3.10
+FROM ruby:slim
+
+# https://github.com/octokit/octokit.rb/issues/1155
+RUN gem install faraday -v 0.15.4 && \
+    gem install octokit
 
 COPY LICENSE README.md /
 
-COPY entrypoint.sh /entrypoint.sh
+COPY entrypoint.rb /entrypoint.rb
 
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["/entrypoint.rb"]
